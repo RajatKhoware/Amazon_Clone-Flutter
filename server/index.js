@@ -1,27 +1,31 @@
-console.log("Hello world");
-
-//Importing express as an external package
+//IMPORTS FROM PACKAGES
+const e = require('express');
 const express = require('express');
+const mongoose = require('mongoose');
 
+//IMPORTS FRON OTHER FILES
+const authRouter = require("./routes/auth");
+
+//INIT
 const app = express();
-
 const PORT = 3000;
+const DB = "mongodb+srv://rajat123:rajat123@cluster0.y2l4omm.mongodb.net/?retryWrites=true&w=majority";
 
-// CREATING AN API
-// http://<your ipaddress>/hello-world
+//middleware
+//CLINT -> MIDDLEWARE -> SERVER -> CLIENT
+app.use(authRouter);
 
-app.get("/", (req, res) => {
-    res.json( { name : "Rajat"});
+//CONNECT
+mongoose
+.connect(DB)
+.then( () => {
+    console.log("Connection Successful");
+})
+.catch((e) => {
+     console.log(e);
 });
 
 
-app.get("/hello-world", (req, res) => {
-    res.json( { hi : "hello world"});
-});
-
-// GET,PUT,POST,DELETE,UPDATE->CRUD
-
-//listen(----- ,ip adderss , call back function)
 app.listen(PORT , () => {
     console.log(`connected at port ${PORT}`);
 });
