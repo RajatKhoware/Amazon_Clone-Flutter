@@ -4,7 +4,7 @@ import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-//for radio button
+//for radio button and keep trake of the rodio button on which we are
 enum Auth {
   signin,
   signup,
@@ -19,14 +19,16 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  //Intesalization of auth 
   Auth _auth = Auth.signup;
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
-
+  
+  //Taking controllwer as constructor 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-
+  
   @override
   void dispose() {
     super.dispose();
@@ -48,14 +50,14 @@ class _AuthScreenState extends State<AuthScreen> {
                const SizedBox(
                 height: 15,
               ),
-              "  Welcome to Amazone-Clone".text.size(26).bold.make(),
+              "   Welcome to Amazone-Clone".text.size(26).bold.make(),
               const SizedBox(
                 height: 25,
               ),
 
               // Creating a radio button for Create Account
               ListTile(
-                //below code is for matcing the title color with formfeild
+                //below code is for matcing the title color with formfeild by if condition
                 tileColor: _auth == Auth.signup
                     ? GlobalVariables.backgroundColor
                     : GlobalVariables.greyBackgroundCOlor,
@@ -130,7 +132,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   padding: const EdgeInsets.all(8),
                   color: GlobalVariables.backgroundColor,
                   child: Form(
-                    key: _signUpFormKey,
+                    key: _signInFormKey,
                     child: Column(
                       children: [
                         CustomTextField(
