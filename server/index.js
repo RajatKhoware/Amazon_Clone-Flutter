@@ -13,6 +13,7 @@ const DB = "mongodb+srv://rajat123:rajat123@cluster0.y2l4omm.mongodb.net/?retryW
 
 //middleware
 //CLINT -> MIDDLEWARE -> SERVER -> CLIENT
+app.use(express.json());
 app.use(authRouter);
 
 //CONNECT
@@ -25,6 +26,6 @@ mongoose
      console.log(e);
 });
 
-app.listen(PORT , () => {
+app.listen(PORT, "0.0.0.0", () => {
     console.log(`connected at port ${PORT}`);
 });
