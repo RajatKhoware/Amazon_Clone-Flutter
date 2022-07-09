@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+String uri = "http://192.168.1.5:3000";
+
 class GlobalVariables {
   // COLORS
   static const appBarGradient = LinearGradient(
@@ -15,5 +17,4 @@ class GlobalVariables {
   static const Color greyBackgroundCOlor = Color(0xffebecee);
   static var selectedNavBarColor = Colors.cyan[800]!;
   static const unselectedNavBarColor = Colors.black87;
-
 }
