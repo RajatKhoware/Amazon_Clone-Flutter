@@ -1,4 +1,5 @@
 import 'package:amazon_clone/constants/global_variables.dart';
+import 'package:amazon_clone/features/account/screen/account_screen.dart';
 import 'package:amazon_clone/features/home/screens/home_screen.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
@@ -13,16 +14,14 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
-  int _page = 1;
+  int _page = 0;
   double bottomBarWidth = 40;
   double bottomBarBorderWidth = 5;
 
   List<Widget> pages = [
     const HomeScreen(),
+    const AccountScreen(),
     Center(
-      child: 'Account Page'.text.make(),
-    ),
-     Center(
       child: 'Cart Page'.text.make(),
     )
   ];
