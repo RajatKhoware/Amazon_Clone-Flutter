@@ -11,6 +11,8 @@ import 'package:amazon_clone/models/user.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../common/widgets/bottom_bar.dart';
+
 class AuthService {
   // sign up user
   void signUpUser({
@@ -81,7 +83,7 @@ class AuthService {
           // ignore: use_build_context_synchronously
           Navigator.pushNamedAndRemoveUntil(
             context,
-            HomeScreen.routeName,
+            BottomBar.routeName,
             (route) => false,
           );
         },
