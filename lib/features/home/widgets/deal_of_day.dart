@@ -94,7 +94,7 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
             child: const Text(
               "See all deals",
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: Color.fromARGB(255, 0, 153, 173)),
+              style: TextStyle(color: Color.fromARGB(255, 0, 153, 173),),
             ),
           ),
         ],
