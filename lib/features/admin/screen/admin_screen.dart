@@ -1,7 +1,6 @@
 import 'package:amazon_clone/features/admin/screen/post_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
-
 import '../../../constants/global_variables.dart';
 
 class AdminScreen extends StatefulWidget {
