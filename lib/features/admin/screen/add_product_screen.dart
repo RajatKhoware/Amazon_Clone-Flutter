@@ -10,7 +10,7 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../constants/global_variables.dart';
 
 class AddProductScreen extends StatefulWidget {
-  static const String routeName = '/AddProductScreen';
+  static const String routeName = '/add-product';
   const AddProductScreen({Key? key}) : super(key: key);
 
   @override
@@ -18,11 +18,16 @@ class AddProductScreen extends StatefulWidget {
 }
 
 class _AddProductScreenState extends State<AddProductScreen> {
-  TextEditingController productNameController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
-  TextEditingController quantityController = TextEditingController();
-  final AdminServices adminServices = AdminServices();
+ final TextEditingController productNameController = TextEditingController();
+ final TextEditingController descriptionController = TextEditingController();
+ final TextEditingController priceController = TextEditingController();
+ final TextEditingController quantityController = TextEditingController();
+ final AdminServices adminServices = AdminServices();
+
+  String category = 'Mobiles';
+  //For adding images
+  List<File> images = [];
+  final _addproductformkey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -33,11 +38,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
     quantityController.dispose();
   }
 
-  String category = 'Mobiles';
-  //For adding images
-  List<File> images = [];
-  final _addproductformkey = GlobalKey<FormState>();
-
 //for displaying list
   List<String> productCategories = [
     'Mobiles',
@@ -46,14 +46,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
     'Books',
     'Fashion'
   ];
-
-//For adding images
-  void selectImages() async {
-    var res = await pickImages();
-    setState(() {
-      images = res;
-    });
-  }
 
   void sellProduct() {
     if (_addproductformkey.currentState!.validate() && images.isNotEmpty) {
@@ -67,6 +59,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
         images: images,
       );
     }
+  }
+
+  //For adding images
+  void selectImages() async {
+    var res = await pickImages();
+    setState(() {
+      images = res;
+    });
   }
 
   @override
