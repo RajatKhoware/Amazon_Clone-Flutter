@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-//Basically the structure of our model Schema
+//Basically the structure of our model -> Schema
 const userSchema = mongoose.Schema({
     name: {
         required: true,
@@ -34,7 +34,9 @@ const userSchema = mongoose.Schema({
     //cart
 });
 
-//Now creating model of our structure .model( user name , and schema)
+//The upper part is structure of our user now lets create usermodel in below code
+//Now creating model of our structure .model( user name, and schema)
 const User = mongoose.model("User", userSchema);
+
 //Export
 module.exports = User;

@@ -46,11 +46,13 @@ class _AuthScreenState extends State<AuthScreen> {
         name: _nameController.text);
   }
 
-   void signInUser() {
+  void signInUser() {
     authService.signInUser(
-        context: context,
-        email: _emailController.text,
-        password: _passwordController.text,);    
+      context: context,
+      email: _emailController.text,
+      password: _passwordController.text,
+      
+    );
   }
 
   @override
@@ -71,14 +73,14 @@ class _AuthScreenState extends State<AuthScreen> {
                 const SizedBox(
                   height: 25,
                 ),
-          
+
                 // Creating a radio button for Create Account
                 ListTile(
                   //below code is for matcing the title color with formfeild by if condition
                   tileColor: _auth == Auth.signup
                       ? GlobalVariables.backgroundColor
                       : GlobalVariables.greyBackgroundCOlor,
-          
+
                   title: "Create Account".text.bold.make(),
                   leading: Radio(
                     activeColor: GlobalVariables.secondaryColor,
@@ -132,7 +134,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                     ),
                   ),
-          
+
                 // Creating a radio button for signup
                 ListTile(
                   tileColor: _auth == Auth.signin
@@ -172,11 +174,13 @@ class _AuthScreenState extends State<AuthScreen> {
                           const SizedBox(
                             height: 10,
                           ),
-                          CustomButtob(text: "Log-In", onTap: () {
-                              if (_signInFormKey.currentState!.validate()) {
+                          CustomButtob(
+                              text: "Log-In",
+                              onTap: () {
+                                if (_signInFormKey.currentState!.validate()) {
                                   signInUser();
                                 }
-                          })
+                              })
                         ],
                       ),
                     ),

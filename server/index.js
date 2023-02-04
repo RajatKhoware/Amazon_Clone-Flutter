@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(authRouter);
 app.use(adminRouter);
 
-//CONNECT
+//Connection with mongoDB Databasee
 mongoose
 .connect(DB)
 .then( () => {

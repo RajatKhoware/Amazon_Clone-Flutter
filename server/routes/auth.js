@@ -6,19 +6,20 @@ const auth = require('../middlewares/auth');
 
 const authRouter = express.Router();
 
-// SIGN UP 
+// SIGN UP API
 authRouter.post("/api/signup", async(req,res) => {
     // get the data from client  
     const {name, email, password } = req.body;
   
     try{
+      //To do validation we need to create model -> user.js
       //validation
       const existingUser = await User.findOne({email});
       if (existingUser){
           return res.status(400).json({ msg: "User with same email already exist!"})
       }
 
-      const hashedPassword = await bcryptjs.hash( password , 8);
+      const hashedPassword = await bcryptjs.hash(password, 8);
   
      //Creating a user model for new user
       let user = new User ({
@@ -26,6 +27,7 @@ authRouter.post("/api/signup", async(req,res) => {
           password: hashedPassword,
           name,
       });
+      //Saving data to DataBase
       user = await user.save();
       //Sending data to client site
       res.json(user);
@@ -34,7 +36,7 @@ authRouter.post("/api/signup", async(req,res) => {
  }
    });
 
-   // SIGN-IN ROUTE
+   // SIGN-IN API
    authRouter.post("/api/signin", async(req,res) => { 
     try{
        // get the data from client  
