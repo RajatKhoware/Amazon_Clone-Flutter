@@ -22,7 +22,7 @@ class AdminServices {
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
-      final cloudinary = CloudinaryPublic("dtpmpvov9", 'px7cv23v');
+      final cloudinary = CloudinaryPublic("dlzw0jcfy", 'wwedv75o');
       List<String> imageUrls = [];
 
       for (int i = 0; i < images.length; i++) {
@@ -82,9 +82,9 @@ class AdminServices {
             //adding product in prouct list which is empty.
             productList.add(
               Product.fromJson(
-                //Encoding string to json agian bcus fromJson only take json data.
+                //decoding json data in string  bcus fromJson only take string data.
                 jsonEncode(
-                  //dedoing json data in string.
+                  //Encoding string to json
                   jsonDecode(res.body)[i],
                 ),
               ),
@@ -96,5 +96,28 @@ class AdminServices {
       showSnakeBar(context, e.toString());
     }
     return productList;
+  }
+
+  void deleteProducts({
+    required BuildContext context,
+    required Product product,
+    required VoidCallback onSuccess,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response res = await http.post(
+        Uri.parse("$uri/admin/delete-product"),
+        body: jsonEncode({
+          'id': product.id,
+        }),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+      );
+      httpErrorHandle(response: res, context: context, onSuccess: onSuccess);
+    } catch (e) {
+      showSnakeBar(context, e.toString());
+    }
   }
 }

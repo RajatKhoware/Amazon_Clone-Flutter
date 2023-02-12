@@ -1,4 +1,5 @@
 import 'package:amazon_clone/constants/loader.dart';
+import 'package:amazon_clone/constants/utils.dart';
 import 'package:amazon_clone/features/account/widgets/single_product.dart';
 import 'package:amazon_clone/features/admin/screen/add_product_screen.dart';
 import 'package:amazon_clone/features/admin/services/admim_services.dart';
@@ -26,6 +27,17 @@ class _PostsScreenState extends State<PostsScreen> {
   fetchAllProducts() async {
     products = await adminservices.fetchAllProducts(context);
     setState(() {});
+  }
+
+  void deleteProducts(Product product, int index) async {
+    adminservices.deleteProducts(
+        context: context,
+        product: product,
+        onSuccess: () {
+          products!.removeAt(index);
+          showSnakeBar(context, "Product Deleted Sucessfully");
+          setState(() {});
+        });
   }
 
   @override
@@ -58,7 +70,7 @@ class _PostsScreenState extends State<PostsScreen> {
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () => deleteProducts(productData, index),
                             icon: const Icon(Icons.delete_outline),
                           ),
                         ],

@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:amazon_clone/features/home/screens/home_screen.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
@@ -123,12 +121,8 @@ class AuthService {
             'x-auth-token': token
           },
         );
-      var userProvider = Provider.of<UserProvider>(
-        context,
-        listen: false,
-      );
-
-      userProvider.setUser(userRes.body);
+        // ignore: use_build_context_synchronously
+        Provider.of<UserProvider>(context, listen: false).setUser(userRes.body);
       }
     } catch (e) {
       showSnakeBar(context, e.toString());

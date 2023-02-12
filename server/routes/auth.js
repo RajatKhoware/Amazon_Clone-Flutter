@@ -55,8 +55,9 @@ authRouter.post("/api/signup", async(req,res) => {
       .status(400)
       .json({ msg: "Incorrect Password. " });
     }
-
+    // Its just like ticket with some ids and keys 
     const token = jwt.sign( { id: user._id}, "passwordKey");
+    // Sending the response of api after all things are validated
     res.json({token, ...user._doc});
     } catch(e){ 
       res.status(500).json({ error: e.message });
