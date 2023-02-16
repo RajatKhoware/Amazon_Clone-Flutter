@@ -1,31 +1,32 @@
-import 'package:amazon_clone/features/home/widgets/address_box.dart';
-import 'package:amazon_clone/features/home/widgets/carousel.dart';
-import 'package:amazon_clone/features/home/widgets/deal_of_day.dart';
-import 'package:amazon_clone/features/home/widgets/top_catagories.dart';
-import 'package:amazon_clone/features/search/screen/search_screen.dart';
-import 'package:amazon_clone/providers/user_provider.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../../constants/global_variables.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
-class HomeScreen extends StatefulWidget {
-  static const String routeName = '/home';
-  const HomeScreen({Key? key}) : super(key: key);
+import 'package:amazon_clone/models/products.dart';
+
+import '../../../constants/global_variables.dart';
+import '../../search/screen/search_screen.dart';
+
+class ProductDetailsScreen extends StatefulWidget {
+  static const String routeName = '/product-details';
+  final Product product;
+  const ProductDetailsScreen({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  void navigateToSearchScreen(String query) {
+    Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
-
-    void navigateToSearchScreen(String query) {
-      Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
-    }
-
-    ;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
@@ -97,19 +98,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: const [
-            AddressBox(),
-            SizedBox(height: 15),
-            TopCatagories(),
-            SizedBox(height: 10),
-            CarouselImages(),
-            SizedBox(height: 10),
-            DealOfTheDay(),
-          ],
         ),
       ),
     );

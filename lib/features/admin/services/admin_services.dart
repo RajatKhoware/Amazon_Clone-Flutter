@@ -37,7 +37,7 @@ class AdminServices {
           quantity: quantity,
           images: imageUrls,
           category: category,
-          price: price);
+          price: price,);
 
       http.Response res = await http.post(
         Uri.parse('$uri/admin/add-product'),

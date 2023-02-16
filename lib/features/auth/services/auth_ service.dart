@@ -98,11 +98,13 @@ class AuthService {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
-
+      
+      // If token is null we store the empty token 
       if (token == null) {
         prefs.setString('x-auth-token', '');
       }
-
+      
+      // Verifying the Token 
       var tokenRes = await http.post(
         Uri.parse('$uri/tokenIsValid'),
         headers: <String, String>{
@@ -112,7 +114,8 @@ class AuthService {
       );
 
       var response = jsonDecode(tokenRes.body);
-
+      
+      // If token is verified we get start the process to get the user data
       if (response == true) {
         http.Response userRes = await http.get(
           Uri.parse('$uri/'),
@@ -121,6 +124,7 @@ class AuthService {
             'x-auth-token': token
           },
         );
+        // After geting user details we store the user data to provider
         // ignore: use_build_context_synchronously
         Provider.of<UserProvider>(context, listen: false).setUser(userRes.body);
       }

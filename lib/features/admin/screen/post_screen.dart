@@ -2,7 +2,7 @@ import 'package:amazon_clone/constants/loader.dart';
 import 'package:amazon_clone/constants/utils.dart';
 import 'package:amazon_clone/features/account/widgets/single_product.dart';
 import 'package:amazon_clone/features/admin/screen/add_product_screen.dart';
-import 'package:amazon_clone/features/admin/services/admim_services.dart';
+import 'package:amazon_clone/features/admin/services/admin_services.dart';
 import 'package:amazon_clone/models/products.dart';
 import 'package:flutter/material.dart';
 
@@ -46,15 +46,17 @@ class _PostsScreenState extends State<PostsScreen> {
         ? const Loader()
         : Scaffold(
             body: GridView.builder(
+                padding: EdgeInsets.all(10),
                 itemCount: products!.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
+                  crossAxisCount: 2,
+                ),
                 itemBuilder: (context, index) {
                   final productData = products![index];
                   return Column(
                     children: [
                       SizedBox(
-                        height: 140,
+                        height: 135,
                         child: SingleProduct(
                           image: productData.images[0],
                         ),
