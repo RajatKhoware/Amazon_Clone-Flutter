@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:amazon_clone/constants/loader.dart';
 import 'package:amazon_clone/features/home/widgets/address_box.dart';
+import 'package:amazon_clone/features/product_details.dart/screen/product_details.dart';
 import 'package:amazon_clone/features/search/service/search_services.dart';
 import 'package:amazon_clone/features/search/widget/searched_product.dart';
 import 'package:amazon_clone/models/products.dart';
@@ -32,6 +33,7 @@ class _SearchScreenState extends State<SearchScreen> {
   fetchSearchedProduct() async {
     productList = await searchService.fetchSearchedProduct(
         context: context, searchedProduct: widget.query);
+
     setState(() {});
   }
 
@@ -110,16 +112,25 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ),
         body: productList == null
-            ? Loader()
+            ? const Loader()
             : Column(
                 children: [
-                  AddressBox(),
-                  SizedBox(height: 20),
+                  const AddressBox(),
+                  const SizedBox(height: 20),
                   Expanded(
                     child: ListView.builder(
                       itemCount: productList!.length,
                       itemBuilder: (context, index) {
-                        return SearchedProduct(product: productList![index]);
+                        final product = productList![index];
+                        return InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                ProductDetailScreen.routeName,
+                                arguments: product,
+                              );
+                            },
+                            child: SearchedProduct(product: product));
                       },
                     ),
                   )

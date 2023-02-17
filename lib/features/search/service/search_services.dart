@@ -1,7 +1,6 @@
 import 'package:amazon_clone/models/products.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:convert';
-import 'dart:io';
 import 'package:amazon_clone/constants/error_handling.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
@@ -42,6 +41,7 @@ class SearchService {
     } catch (e) {
       showSnakeBar(context, e.toString());
     }
+
     return productList;
   }
 }
