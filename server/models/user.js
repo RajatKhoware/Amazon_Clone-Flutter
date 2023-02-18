@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { productSchema } = require('./product');
 
 //Basically the structure of our model -> Schema
 const userSchema = mongoose.Schema({
@@ -14,7 +15,7 @@ const userSchema = mongoose.Schema({
         validate: {
             validator: (value) => {
                 const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-                return value.match(re);            
+                return value.match(re);
             },
             message: 'Please enter a valid email address'
         },
@@ -23,15 +24,24 @@ const userSchema = mongoose.Schema({
         required: true,
         type: String,
     },
-    address: {  
+    address: {
         type: String,
         default: '',
-    },   
+    },
     type: {
         type: String,
         default: 'user',
-    }
-    //cart
+    },
+    cart: [
+        {
+            product: productSchema,
+            quantity: {
+                type: Number,
+                required: true,
+                
+            }
+        }
+    ]
 });
 
 //The upper part is structure of our user now lets create usermodel in below code

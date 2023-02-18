@@ -11,6 +11,39 @@ import '../../../constants/global_variables.dart';
 import '../../../constants/utils.dart';
 
 class ProductDetailesServices {
+  void addToCart({
+    required BuildContext context,
+    required Product product,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    try {
+      http.Response res = await http.post(
+        Uri.parse('$uri/api/add-to-cart'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode({
+          "id": product.id!,
+        }),
+      );
+
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          User user =
+              userProvider.user.copyWith(cart: jsonDecode(res.body)['cart']);
+          userProvider.setUserWithModel(user);
+          showSnakeBar(context, "Product added to cart !!");
+        },
+      );
+    } catch (e) {
+      showSnakeBar(context, e.toString());
+    }
+  }
+
   void productRating({
     required BuildContext context,
     required Product product,

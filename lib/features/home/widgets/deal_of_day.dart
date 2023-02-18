@@ -28,7 +28,7 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
 
   void navigateToProductDetails() {
     Navigator.pushNamed(context, ProductDetailScreen.routeName,
-        arguments: product,);
+        arguments: product);
   }
 
   @override

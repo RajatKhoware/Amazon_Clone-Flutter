@@ -2,7 +2,7 @@ const express = require("express");
 const { Cursor } = require("mongoose");
 const productRouter = express.Router();
 const auth = require("../middlewares/auth");
-const Product = require('../models/product');
+const { Product } = require('../models/product');
 
 //Get the products
 productRouter.get("/api/products", auth, async (req, res) => {
