@@ -14,20 +14,21 @@ class SearchedProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //For intitial totalRating is zero
     double totalRating = 0;
-    // for (int i = 0; i < product.rating!.length; i++) {
-    //   totalRating += product.rating![i].rating;
-    // }
-    // double avgRating = 0;
-    // if (totalRating != 0) {
-    //   avgRating = totalRating / product.rating!.length;
-    // }
+    //Summing all the rating present in database
+    for (int i = 0; i < product.rating!.length; i++) {
+      totalRating += product.rating![i].rating;
+    }
+    double avgRating = 0;
+    // Calculating avgRating
+    if (totalRating != 0) {
+      avgRating = totalRating / product.rating!.length;
+    }
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(
-            horizontal: 10,
-          ),
+          margin: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: [
               Image.network(
@@ -52,9 +53,7 @@ class SearchedProduct extends StatelessWidget {
                   Container(
                     width: 235,
                     padding: const EdgeInsets.only(left: 10, top: 5),
-                    child: Stars(
-                      rating: 4,
-                    ),
+                    child: Stars(rating: avgRating),
                   ),
                   Container(
                     width: 235,

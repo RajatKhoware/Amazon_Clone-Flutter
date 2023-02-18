@@ -2,6 +2,7 @@
 
 import 'package:amazon_clone/constants/loader.dart';
 import 'package:amazon_clone/features/home/service/home_services.dart';
+import 'package:amazon_clone/features/product_details.dart/screen/product_details.dart';
 import 'package:amazon_clone/models/products.dart';
 import 'package:flutter/material.dart';
 import '../../../constants/global_variables.dart';
@@ -23,13 +24,15 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
   List<Product>? productList;
   @override
   void initState() {
-    fetchCategoryProducts();
     super.initState();
+    fetchCategoryProducts();
   }
 
   fetchCategoryProducts() async {
     productList = await services.fetchCategoryProducts(
-        context: context, category: widget.category);
+      context: context,
+      category: widget.category,
+    );
     setState(() {});
   }
 
@@ -76,40 +79,49 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 1,
                       childAspectRatio: 1.4,
-                      mainAxisSpacing: 10,
+                      //mainAxisSpacing: 10,
                     ),
                     itemBuilder: (context, index) {
                       final product = productList![index];
-                      return Column(
-                        children: [
-                          SizedBox(
-                            height: 130,
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black12,
-                                  width: 0.5,
+                      return InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            ProductDetailScreen.routeName,
+                            arguments: product,
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 130,
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                    width: 0.5,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Image.network(product.images[0]),
                                 ),
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Image.network(product.images[0]),
+                            ),
+                            Container(
+                              alignment: Alignment.topLeft,
+                              padding: const EdgeInsets.only(
+                                top: 5,
+                                right: 15,
+                              ),
+                              child: Text(
+                                product.name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                          ),
-                          Container(
-                            alignment: Alignment.topLeft,
-                            padding: const EdgeInsets.only(
-                              top: 5,
-                              right: 15,
-                            ),
-                            child: Text(
-                              product.name,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     }),
               )
