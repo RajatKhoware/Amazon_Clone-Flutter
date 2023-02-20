@@ -33,7 +33,6 @@ class _SearchScreenState extends State<SearchScreen> {
   fetchSearchedProduct() async {
     productList = await searchService.fetchSearchedProduct(
         context: context, searchedProduct: widget.query);
-
     setState(() {});
   }
 

@@ -101,8 +101,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: const [
-            AddressBox(),
+          children: [
+            InkWell(
+                onTap: () {
+                  print(user.token);
+                },
+                child: AddressBox()),
             SizedBox(height: 15),
             TopCatagories(),
             SizedBox(height: 10),

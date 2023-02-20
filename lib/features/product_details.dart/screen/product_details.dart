@@ -62,7 +62,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   void addToCart() {
     productDetailesServices.addToCart(
-        context: context, product: widget.product);
+      context: context,
+      product: widget.product,
+    );
   }
 
   @override
