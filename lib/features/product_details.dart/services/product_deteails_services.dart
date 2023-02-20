@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:amazon_clone/models/products.dart';
 import 'package:amazon_clone/models/user.dart';
 import 'package:amazon_clone/providers/user_provider.dart';

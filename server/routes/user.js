@@ -14,7 +14,7 @@ userRouther.post("/api/add-to-cart", auth, async (req, res) => {
         // Checking if cart is empty add the product
         if (user.cart.length == 0) {
             user.cart.push({ product, quantity: 1 });
-        } 
+        }
         // If cart is not empty
         // Case 1 : product is present in cart so we can add one more quantity of it
         // Case 2 : product is not present in cart we can add one quantity of it
@@ -28,9 +28,13 @@ userRouther.post("/api/add-to-cart", auth, async (req, res) => {
             // Case 1
             if (isProductPresent) {
                 let producttt = user.cart.find((productt) => productt.product._id.equals(product._id));
-                producttt.quanity += 1;
-            } 
+                producttt.quantity = producttt.quantity + 1;
+                console.log("product present");
+
+            }
             // Case 2
+            //From map model class ke bare se samjna hai map method ke bare me samjna hai
+            //
             else {
                 user.cart.push({ product, quantity: 1 });
             }
@@ -42,7 +46,27 @@ userRouther.post("/api/add-to-cart", auth, async (req, res) => {
         res.status(500).json({ error: e.message });
     }
 
+    userRouther.delete("/api/remove-from-cart/:id", auth, async (req, res) => {
+        try {
+            const { id } = req.params;
+            const product = await Product.findById(id);
+            let user = await User.findById(req.user);
 
+            for (let i = 0; i < user.cart.length; i++) {
+                if (user.cart[i].product._id.equals(product._id)) {
+                    if (user.cart[i].quantity == 1) {
+                        user.cart.splice(i, 1);
+                    } else {
+                        user.cart[i].quantity -= 1;
+                    }
+                }
+            }
+            user = await user.save();
+            res.json(user);
+        } catch (e) {
+            res.status(500).json({ error: e.message });
+        }
+    })
 
 })
 
