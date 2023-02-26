@@ -2,9 +2,11 @@ const express = require("express");
 const userRouther = express.Router();
 const auth = require("../middlewares/auth");
 const { Product } = require('../models/product');
+const { findById } = require("../models/user");
 const User = require("../models/user");
 
 
+// Add to cart
 userRouther.post("/api/add-to-cart", auth, async (req, res) => {
     try {
         const { id } = req.body;
@@ -45,29 +47,42 @@ userRouther.post("/api/add-to-cart", auth, async (req, res) => {
     } catch (e) {
         res.status(500).json({ error: e.message });
     }
+});
 
-    userRouther.delete("/api/remove-from-cart/:id", auth, async (req, res) => {
-        try {
-            const { id } = req.params;
-            const product = await Product.findById(id);
-            let user = await User.findById(req.user);
+// Delete product from cart
+userRouther.delete("/api/remove-from-cart/:id", auth, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const product = await Product.findById(id);
+        let user = await User.findById(req.user);
 
-            for (let i = 0; i < user.cart.length; i++) {
-                if (user.cart[i].product._id.equals(product._id)) {
-                    if (user.cart[i].quantity == 1) {
-                        user.cart.splice(i, 1);
-                    } else {
-                        user.cart[i].quantity -= 1;
-                    }
+        for (let i = 0; i < user.cart.length; i++) {
+            if (user.cart[i].product._id.equals(product._id)) {
+                if (user.cart[i].quantity == 1) {
+                    user.cart.splice(i, 1);
+                } else {
+                    user.cart[i].quantity -= 1;
                 }
             }
-            user = await user.save();
-            res.json(user);
-        } catch (e) {
-            res.status(500).json({ error: e.message });
         }
-    })
+        user = await user.save();
+        res.json(user);
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
 
-})
+// Save user address
+userRouther.post("/api/save-user-address", auth, async (res, req) => {
+    try {
+        const { address } = req.body;
+        let user = await User.findById(req.user);
+        user.address = address;
+        user = await user.save();
+        res.json(user);
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
 
 module.exports = userRouther;

@@ -1,4 +1,5 @@
 import 'package:amazon_clone/common/widgets/custom_button.dart';
+import 'package:amazon_clone/features/address/screen/address_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../constants/global_variables.dart';
@@ -117,7 +118,13 @@ class _CartScreenState extends State<CartScreen> {
             padding: const EdgeInsets.all(8.0),
             child: CustomButtob(
               text: 'Proceed to Buy (${user.cart.length} items)',
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  AddressScreen.routeName,
+                  arguments: sum.toString(),
+                );
+              },
               color: Colors.yellow[600],
             ),
           ),
