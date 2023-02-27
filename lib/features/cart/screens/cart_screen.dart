@@ -17,17 +17,14 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  // Search 
   void navigateToSearchScreen(String query) {
-    Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
+    Navigator.pushNamed(
+      context,
+      SearchScreen.routeName,
+      arguments: query,
+    );
   }
-
-  // void navigateToAddress(int sum) {
-  //   Navigator.pushNamed(
-  //     context,
-  //     AddressScreen.routeName,
-  //     arguments: sum.toString(),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +114,7 @@ class _CartScreenState extends State<CartScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: CustomButtob(
-              text: 'Proceed to Buy (${user.cart.length} items)',
+              text: 'Proceed to Buy ${user.cart.length} items',
               onTap: () {
                 Navigator.pushNamed(
                   context,

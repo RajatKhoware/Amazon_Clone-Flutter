@@ -43,4 +43,43 @@ class AddresServices {
       showSnakeBar(context, e.toString());
     }
   }
+  
+   void placeOrder({
+    required BuildContext context,
+    required String address,
+    required double totalPrice,
+   
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    try {
+      http.Response res = await http.post(
+        Uri.parse('$uri/api/order'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode({
+          'cart': userProvider.user.cart,
+          'totalPrice': totalPrice,
+          'address': address,
+        }),
+      );
+
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          User user = userProvider.user.copyWith(
+            cart: [],
+          );
+          userProvider.setUserWithModel(user);
+          showSnakeBar(context, "Your order has been placed!");
+        },
+      );
+    } catch (e) {
+      showSnakeBar(context, e.toString());
+    }
+  }
+
 }

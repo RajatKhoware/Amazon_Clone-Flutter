@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:amazon_clone/constants/utils.dart';
 import 'package:amazon_clone/features/address/services/address_services.dart';
-import 'package:amazon_clone/models/user.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:pay/pay.dart';
@@ -56,12 +55,34 @@ class _AddressScreenState extends State<AddressScreen> {
     );
   }
 
-  void onApplePayResult(res) {}
   void onGPayResult(res) {
-    if (Provider.of<UserProvider>(context).user.address.isEmpty) {
+    if (Provider.of<UserProvider>(context, listen: false)
+        .user
+        .address
+        .isEmpty) {
       addresServices.saveUserAddress(
           context: context, address: addressToBeUsed);
     }
+    addresServices.placeOrder(
+      context: context,
+      address: addressToBeUsed,
+      totalPrice: double.parse(widget.totalAmount),
+    );
+  }
+
+  void order() {
+    if (Provider.of<UserProvider>(context, listen: false)
+        .user
+        .address
+        .isEmpty) {
+      addresServices.saveUserAddress(
+          context: context, address: addressToBeUsed);
+    }
+    addresServices.placeOrder(
+      context: context,
+      address: addressToBeUsed,
+      totalPrice: double.parse(widget.totalAmount),
+    );
   }
 
   // OnPressed of gpay button
@@ -162,17 +183,37 @@ class _AddressScreenState extends State<AddressScreen> {
                 ),
               ),
               const SizedBox(height: 10),
+              InkWell(
+                onTap: order,
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.black,
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "Pay",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
               GooglePayButton(
                 onPressed: () => payPressed(userAddress),
                 paymentConfiguration:
                     PaymentConfiguration.fromJsonString(defaultGooglePay),
-                onPaymentResult: onApplePayResult,
+                onPaymentResult: onGPayResult,
                 paymentItems: paymentItem,
                 height: 50,
                 width: double.infinity,
-                loadingIndicator: const Center(
-                  child: CircularProgressIndicator(),
-                ),
+                loadingIndicator:
+                    const Center(child: CircularProgressIndicator()),
               ),
             ],
           ),

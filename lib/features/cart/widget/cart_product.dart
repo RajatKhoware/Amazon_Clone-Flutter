@@ -44,9 +44,7 @@ class _CartProductState extends State<CartProduct> {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(
-            horizontal: 10,
-          ),
+          margin: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: [
               Image.network(
@@ -133,15 +131,13 @@ class _CartProductState extends State<CartProduct> {
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black12, width: 1.5),
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(0),
+                        borderRadius: BorderRadius.circular(6),
                       ),
                       child: Container(
                         width: 35,
                         height: 32,
                         alignment: Alignment.center,
-                        child: Text(
-                          quantity.toString()
-                        ),
+                        child: Text(quantity.toString()),
                       ),
                     ),
                     InkWell(
