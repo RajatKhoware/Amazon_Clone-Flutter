@@ -70,6 +70,21 @@ class _AddressScreenState extends State<AddressScreen> {
     );
   }
 
+  void order() {
+    if (Provider.of<UserProvider>(context, listen: false)
+        .user
+        .address
+        .isEmpty) {
+      addresServices.saveUserAddress(
+          context: context, address: addressToBeUsed);
+    }
+    addresServices.placeOrder(
+      context: context,
+      address: addressToBeUsed,
+      totalPrice: double.parse(widget.totalAmount),
+    );
+  }
+
   // OnPressed of gpay button
   void payPressed(String addressFromProvider) {
     addressToBeUsed = "";
@@ -169,7 +184,7 @@ class _AddressScreenState extends State<AddressScreen> {
               ),
               const SizedBox(height: 10),
               InkWell(
-                onTap: () {},
+                onTap: order,
                 child: Container(
                   width: double.infinity,
                   height: 50,
